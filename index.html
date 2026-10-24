@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -441,7 +441,15 @@
 
   <footer>
     <button id="btnPrev" class="nav-btn" onclick="prevSlide()">◀ Anterior</button>
-    <div id="slideCounter" class="slide-indicator">Diapositiva 1 de 6</div>
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
+      <div id="slideCounter" class="slide-indicator">Diapositiva 1 de 6</div>
+      <div style="font-size: 12px; color: #94a3b8; text-align: center;">
+        Desarrollado por <strong>Cristian Tabares</strong> para la materia <strong>Computación en la Nube (55550) — CUN 2026</strong> | 
+        <a href="https://github.com/soycamiloypunto/Universidad_Computacion_Nube" target="_blank" rel="noopener noreferrer" style="color: var(--accent-cyan); text-decoration: underline; font-weight: 700;">
+          📁 Ver Repositorio GitHub &amp; README Oficial
+        </a>
+      </div>
+    </div>
     <button id="btnNext" class="nav-btn" onclick="nextSlide()">Siguiente ▶</button>
   </footer>
 

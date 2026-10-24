@@ -8,6 +8,7 @@
 * **Grupo / Bloque / Ciclo:** 55550 / PRIMER BLOQUE / 26P05
 * **Docente Tutor:** Mario A. Reales
 * **Repositorio Remoto:** [Universidad_Computacion_Nube](https://github.com/soycamiloypunto/Universidad_Computacion_Nube.git)
+* **Presentación Web (GitHub Pages):** [https://soycamiloypunto.github.io/Universidad_Computacion_Nube/](https://soycamiloypunto.github.io/Universidad_Computacion_Nube/)
 
 ---
 
@@ -31,18 +32,14 @@ Diseño, evaluación técnico-financiera (FinOps) y sustentación de una arquite
 | **[`ACA_Computacion_Nube_Cristian_Tabares.docx`](./ACA_Computacion_Nube_Cristian_Tabares.docx)** | Word APA 7 | Documento formal completo bajo normas APA 7 (interlineado 1.5, sangría en primera línea, portada institucional, justificación técnica, arquitectura AWS, evaluación FinOps, seguridad, soberanía de datos Ley 1581 y referencias). |
 | **[`Modelo_FinOps_TCO_ROI_VAN.xlsx`](./Modelo_FinOps_TCO_ROI_VAN.xlsx)** | Excel | Modelo financiero completo con fórmulas nativas: comparativa On-Premise ($90.700 USD) vs AWS ($28.680 USD), ahorro del 68.3%, ROI del 196.4% y cálculo de VAN ($41.350 USD) a tasa WACC del 12%. |
 | **[`Diagramas_Arquitectura.md`](./Diagramas_Arquitectura.md)** | Markdown / Mermaid | Diagrama lógico de red VPC Multi-AZ (`us-east-1`), flujo de datos IoT de la finca a la mesa, y Modelo de Responsabilidad Compartida en código Mermaid listo para renderizar. |
-| **[`presentacion_pitch.html`](./presentacion_pitch.html)** | HTML5 Interactivo | Diapositivas interactivas proyectadas durante la sustentación, con temporizador regresivo de 10 minutos integrado y atajos de teclado `[← / →]`. |
+| **[`index.html`](./index.html)** | HTML5 Interactivo | Diapositivas interactivas listas para proyectar o desplegar en GitHub Pages, con temporizador regresivo de 10 minutos integrado y atajos de teclado `[← / →]`. |
 
 ---
 
 ## 🚀 Cómo Visualizar la Presentación Interactiva
-Puedes abrir directamente el archivo [`presentacion_pitch.html`](./presentacion_pitch.html) en tu navegador web preferido (Chrome, Edge, Firefox) con doble clic, o servirlo localmente:
-```bash
-# Opcional si deseas levantarlo con un servidor local
-npx serve .
-# O simplemente abrirlo en Windows:
-start presentacion_pitch.html
-```
+Puedes abrirla de dos formas:
+1. **En línea mediante GitHub Pages:** [https://soycamiloypunto.github.io/Universidad_Computacion_Nube/](https://soycamiloypunto.github.io/Universidad_Computacion_Nube/)
+2. **Localmente en tu navegador:** Haz doble clic sobre [`index.html`](./index.html) o ejecútalo con `start index.html`.
 
 ---
 
