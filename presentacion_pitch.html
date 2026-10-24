@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pitch ACA — Computación en la Nube | AgroSilvania Conectada</title>
+  <style>
+    :root {
+      --bg: #0b1329;
+      --card-bg: #152243;
+      --accent-green: #10b981;
+      --accent-cyan: #06b6d4;
+      --accent-orange: #f59e0b;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --border: #1e293b;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow: hidden;
+    }
+    header {
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(8px);
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #1e293b;
+      z-index: 10;
+    }
+    .badge {
+      background: linear-gradient(135deg, #10b981, #06b6d4);
+      color: #0b1329;
+      font-weight: 700;
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .timer-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #0f172a;
+      padding: 6px 14px;
+      border-radius: 8px;
+      border: 1px solid #334155;
+    }
+    .timer-display {
+      font-family: monospace;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--accent-cyan);
+    }
+    .btn-timer {
+      background: #1e293b;
+      border: 1px solid #475569;
+      color: #f8fafc;
+      padding: 4px 8px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+    .btn-timer:hover { background: #334155; }
+
+    main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 24px;
+      position: relative;
+    }
+    .slide {
+      display: none;
+      width: 100%;
+      max-width: 1100px;
+      height: 82vh;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 40px;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+      flex-direction: column;
+      justify-content: space-between;
+      animation: fadeIn 0.3s ease;
+      overflow-y: auto;
+    }
+    .slide.active {
+      display: flex;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    h1 {
+      font-size: 32px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #f8fafc, #94a3b8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 8px;
+    }
+    h2 {
+      font-size: 22px;
+      color: var(--accent-cyan);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    h3 { font-size: 18px; color: var(--accent-green); margin-bottom: 8px; }
+    p, li { font-size: 15px; line-height: 1.6; color: #cbd5e1; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+    .box {
+      background: #0f172a;
+      border: 1px solid #1e293b;
+      border-radius: 10px;
+      padding: 16px;
+    }
+    .box.highlight {
+      border-color: var(--accent-green);
+      background: rgba(16, 185, 129, 0.05);
+    }
+    .stat-card {
+      background: #0f172a;
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+      border: 1px solid #334155;
+    }
+    .stat-number {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--accent-green);
+      margin-bottom: 4px;
+    }
+    .stat-label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 13px; }
+    th, td { padding: 8px 12px; text-align: left; border-bottom: 1px solid #1e293b; }
+    th { background: #0f172a; color: var(--accent-cyan); font-weight: 600; }
+    .tag {
+      display: inline-block;
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-weight: 600;
+      margin-right: 4px;
+    }
+    .tag-green { background: rgba(16, 185, 129, 0.2); color: #10b981; }
+    .tag-blue { background: rgba(6, 182, 212, 0.2); color: #06b6d4; }
+    .tag-orange { background: rgba(245, 158, 11, 0.2); color: #f59e0b; }
+
+    footer {
+      background: rgba(15, 23, 42, 0.95);
+      padding: 12px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid #1e293b;
+    }
+    .nav-btn {
+      background: #1e293b;
+      color: #f8fafc;
+      border: 1px solid #334155;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .nav-btn:hover { background: #334155; }
+    .nav-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .slide-indicator { color: var(--text-muted); font-size: 14px; font-weight: 600; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <span class="badge">CUN — Ingeniería de Sistemas</span>
+      <span style="font-size: 13px; color: #94a3b8;">Computación en la Nube / 55550 / Docente: Mario A. Reales</span>
+    </div>
+    <div class="timer-box">
+      <span style="font-size: 12px; color: #94a3b8;">Pitch 10 Min:</span>
+      <span id="timerDisplay" class="timer-display">10:00</span>
+      <button id="btnStartPause" class="btn-timer" onclick="toggleTimer()">Iniciar</button>
+      <button class="btn-timer" onclick="resetTimer()">Reset</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- SLIDE 1: PORTADA -->
+    <div class="slide active">
+      <div>
+        <div style="margin-bottom: 20px;">
+          <span class="tag tag-green">Caso C: Agro-Industria IoT</span>
+          <span class="tag tag-blue">AWS Cloud Architecture</span>
+          <span class="tag tag-orange">Pitch 10 Minutos</span>
+        </div>
+        <h1 style="font-size: 38px; margin-bottom: 12px;">AgroSilvania Conectada</h1>
+        <p style="font-size: 18px; color: var(--accent-cyan); font-weight: 500; margin-bottom: 24px;">
+          Desafío de Arquitectura Estratégica: Plataforma IoT y Marketplace Directo Campesino-Consumidor en Silvania, Cundinamarca
+        </p>
+        <div class="grid-2" style="margin-top: 30px;">
+          <div class="box">
+            <h3 style="color: var(--accent-cyan);">Información del Expositor</h3>
+            <p><strong>Estudiante:</strong> Cristian Camilo Tabares Villanueva</p>
+            <p><strong>Perfil:</strong> Desarrollador Backend Java & Arquitectura Cloud</p>
+            <p><strong>Institución:</strong> Corporación Unificada Nacional (CUN)</p>
+          </div>
+          <div class="box">
+            <h3 style="color: var(--accent-green);">Detalles Académicos</h3>
+            <p><strong>Asignatura:</strong> COMPUTACION EN LA NUBE</p>
+            <p><strong>Código / Bloque:</strong> 55550 / PRIMER BLOQUE / 26P05</p>
+            <p><strong>Docente Tutor:</strong> Mario A. Reales</p>
+          </div>
+        </div>
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #1e293b; padding-top: 16px;">
+        <span style="font-size: 13px; color: #64748b;">Navega con las flechas [← / →] o la barra espaciadora</span>
+        <span class="badge" style="background: #334155; color: #94a3b8;">Noviembre 2026</span>
+      </div>
+    </div>
+
+    <!-- SLIDE 2: CONTEXTO Y PROBLEMA (1.5 min) -->
+    <div class="slide">
+      <div>
+        <h2>1. Contexto de Negocio y Quiebra del Modelo On-Premise (1.5 min)</h2>
+        <div class="grid-2">
+          <div class="box">
+            <h3 style="color: #ef4444;">El Reto Rural en Silvania (Sumapaz)</h3>
+            <ul style="padding-left: 20px; margin-top: 8px;">
+              <li><strong>Intermediación abusiva:</strong> Los intermediarios retienen entre el 50% y el 65% del margen final de café, mora y uchuva.</li>
+              <li><strong>Vulnerabilidad climática:</strong> Heladas nocturnas imprevistas arruinan cosechas sin monitoreo microclimático en tiempo real.</li>
+              <li><strong>Asimetría informativa:</strong> El campesino no conoce la demanda real ni los precios justos en Bogotá.</li>
+            </ul>
+          </div>
+          <div class="box">
+            <h3 style="color: var(--accent-orange);">Inviabilidad de Infraestructura On-Premise</h3>
+            <ul style="padding-left: 20px; margin-top: 8px;">
+              <li><strong>Cortes eléctricos frecuentes:</strong> Demanda costosas plantas diésel y UPS trifásicas con alto costo de combustible.</li>
+              <li><strong>Conectividad inestable:</strong> Enlaces rurales sin redundancia ni garantías de ancho de banda.</li>
+              <li><strong>CAPEX prohibitivo:</strong> Inversión superior a USD $38.500 en hardware físico inasumible para comunidades agrícolas.</li>
+              <li><strong>Falta de elasticidad:</strong> Imposible escalar para picos de cosecha sin pagar infraestructura ociosa el resto del año.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="box highlight" style="margin-top: 20px;">
+          <h3 style="color: var(--accent-green);">La Alternativa Estratégica: Nube Pública AWS</h3>
+          <p>Plataforma elástica de borde a la nube con <strong>AWS IoT Core</strong> para telemetría de cultivos y <strong>AWS ECS Fargate</strong> para comercialización directa sin intermediarios.</p>
+        </div>
+      </div>
+      <span style="font-size: 12px; color: #64748b;">Rol: Introducción y Contexto | Tiempo: 0:00 - 1:30 min</span>
+    </div>
+
+    <!-- SLIDE 3: ARQUITECTURA TÉCNICA (3.0 min) -->
+    <div class="slide">
+      <div>
+        <h2>2. Diseño de Arquitectura Estratégica en AWS (Rol: Arquitecto de Soluciones)</h2>
+        <div class="grid-3">
+          <div class="box">
+            <h3 style="color: var(--accent-cyan);">1. Telemetría IoT en Borde</h3>
+            <ul style="padding-left: 18px; font-size: 13px;">
+              <li>Sensores ESP32 solares (humedad, temp, radiación).</li>
+              <li>Conexión MQTT sobre TLS 1.3 con certificados X.509.</li>
+              <li><strong>AWS IoT Core</strong> + Reglas automáticas.</li>
+              <li><strong>AWS Lambda</strong> para ingesta serverless.</li>
+              <li><strong>Amazon DynamoDB</strong> para series temporales.</li>
+            </ul>
+          </div>
+          <div class="box">
+            <h3 style="color: var(--accent-green);">2. Red y Cómputo Multi-AZ</h3>
+            <ul style="padding-left: 18px; font-size: 13px;">
+              <li>Región <code>us-east-1</code> (latencia ~65ms a Colombia).</li>
+              <li>VPC <code>10.0.0.0/16</code> en 2 Zonas (AZ 1a y AZ 1b).</li>
+              <li>Application Load Balancer (ALB) público.</li>
+              <li><strong>AWS ECS con Fargate:</strong> Microservicios backend Java Spring Boot en contenedores sin servidores físicos.</li>
+              <li>Auto-scaling elástico (2 a 10 tareas).</li>
+            </ul>
+          </div>
+          <div class="box">
+            <h3 style="color: var(--accent-orange);">3. Datos ACID y Frontend</h3>
+            <ul style="padding-left: 18px; font-size: 13px;">
+              <li><strong>Amazon Aurora Serverless v2 (MySQL):</strong> Transacciones de compras directas, escala de 0.5 a 4 ACUs.</li>
+              <li>Subredes privadas sin salida a Internet.</li>
+              <li>SPA React alojada en <strong>Amazon S3</strong>.</li>
+              <li>Distribución global CDN con <strong>CloudFront</strong>.</li>
+              <li>Protección perimetral con <strong>AWS WAF</strong>.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="box" style="margin-top: 16px; background: #0f172a;">
+          <p style="font-size: 13px;"><em>📌 Diagrama completo interactivo disponible en el repositorio: <code>Diagramas_Arquitectura.md</code></em></p>
+        </div>
+      </div>
+      <span style="font-size: 12px; color: #64748b;">Rol: Arquitecto de Soluciones | Tiempo: 1:30 - 4:30 min</span>
+    </div>
+
+    <!-- SLIDE 4: EVALUACIÓN FINOPS (2.5 min) -->
+    <div class="slide">
+      <div>
+        <h2>3. Evaluación FinOps y Análisis Financiero (Rol: Analista FinOps)</h2>
+        <div class="grid-4" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px;">
+          <div class="stat-card">
+            <div class="stat-number">68.3%</div>
+            <div class="stat-label">Ahorro Neto en TCO</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">USD $62.020</div>
+            <div class="stat-label">Ahorro Absoluto (3 Años)</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">196.4%</div>
+            <div class="stat-label">Retorno de Inversión (ROI)</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">USD $41.350</div>
+            <div class="stat-label">Valor Actual Neto (VAN)</div>
+          </div>
+        </div>
+
+        <table style="background: #0f172a; border-radius: 8px; overflow: hidden;">
+          <thead>
+            <tr>
+              <th>Concepto Financiero</th>
+              <th>Datacenter On-Premise</th>
+              <th>AWS Cloud (Elástico + Savings Plans)</th>
+              <th>Ahorro para la Región</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>CAPEX Inicial (Setup / Hardware)</strong></td>
+              <td>USD $38.500</td>
+              <td>USD $4.200 (IaC Terraform)</td>
+              <td style="color: var(--accent-green); font-weight: 700;">USD $34.300 (89.1%)</td>
+            </tr>
+            <tr>
+              <td><strong>OPEX Mensual Promedio</strong></td>
+              <td>USD $1.450 / mes</td>
+              <td>USD $680 / mes</td>
+              <td style="color: var(--accent-green); font-weight: 700;">USD $770 / mes (53.1%)</td>
+            </tr>
+            <tr style="background: rgba(16, 185, 129, 0.1);">
+              <td><strong>TCO Total a 36 Meses</strong></td>
+              <td style="color: #ef4444; font-weight: 700;">USD $90.700</td>
+              <td style="color: var(--accent-cyan); font-weight: 700;">USD $28.680</td>
+              <td style="color: var(--accent-green); font-weight: 800; font-size: 15px;">USD $62.020 (68.3%)</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="font-size: 12px; color: #94a3b8; margin-top: 10px;">
+          * Tasa de descuento calculada al 12% E.A. | Tiempo de recuperación (Payback Period): <strong>4.8 meses</strong>. Hoja de cálculo completa: <code>Modelo_FinOps_TCO_ROI_VAN.xlsx</code>.
+        </p>
+      </div>
+      <span style="font-size: 12px; color: #64748b;">Rol: Analista FinOps | Tiempo: 4:30 - 7:00 min</span>
+    </div>
+
+    <!-- SLIDE 5: SEGURIDAD Y CONTINUIDAD (2.0 min) -->
+    <div class="slide">
+      <div>
+        <h2>4. Seguridad, Gobernanza y Continuidad (Rol: Oficial de Seguridad)</h2>
+        <div class="grid-2">
+          <div class="box">
+            <h3 style="color: var(--accent-cyan);">Modelo de Responsabilidad Compartida</h3>
+            <ul style="padding-left: 18px; font-size: 13px;">
+              <li><strong>AWS:</strong> Seguridad <em>de</em> la nube (hardware físico, centros de datos, red global).</li>
+              <li><strong>Mi Equipo:</strong> Seguridad <em>en</em> la nube (IAM Least Privilege, cifrado KMS AES-256 en reposo, TLS 1.3 en tránsito).</li>
+              <li>Rotación automática de secretos con <strong>AWS Secrets Manager</strong>.</li>
+            </ul>
+          </div>
+          <div class="box">
+            <h3 style="color: var(--accent-green);">Resiliencia y Métricas de Continuidad</h3>
+            <ul style="padding-left: 18px; font-size: 13px;">
+              <li><strong>SLA Garantizado:</strong> 99.95% de disponibilidad Multi-AZ.</li>
+              <li><strong>RPO &lt; 5 min:</strong> Replicación sincrónica en 6 copias con Aurora MySQL + snapshots continuos a S3.</li>
+              <li><strong>RTO &lt; 15 min:</strong> Despliegue automatizado con Terraform IaC ante contingencias regionales.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="box highlight" style="margin-top: 16px;">
+          <h3 style="color: var(--accent-orange);">Soberanía de Datos y Cumplimiento Normativo Colombiano</h3>
+          <p style="font-size: 13px;">
+            Alineación estricta con la <strong>Ley Estatutaria 1581 de 2012</strong> (Habeas Data) y decretos de la SIC. Consentimiento informado de productores campesinos, cifrado punto a punto y cláusulas contractuales tipo internacionales para la transferencia legítima hacia <code>us-east-1</code>.
+          </p>
+        </div>
+      </div>
+      <span style="font-size: 12px; color: #64748b;">Rol: Oficial de Seguridad | Tiempo: 7:00 - 9:00 min</span>
+    </div>
+
+    <!-- SLIDE 6: CIERRE E IMPACTO (1.0 min) -->
+    <div class="slide">
+      <div>
+        <h2>5. Sostenibilidad, Ética Profesional y Cierre (1.0 min)</h2>
+        <div class="grid-2">
+          <div class="box">
+            <h3 style="color: var(--accent-green);">Sostenibilidad Ambiental</h3>
+            <p style="font-size: 13px; margin-bottom: 8px;">
+              Según la herramienta <em>AWS Customer Carbon Footprint Tool</em>, el proyecto logra una <strong>reducción del 88% en la huella de carbono</strong> en comparación con un datacenter físico con generador diésel.
+            </p>
+            <p style="font-size: 13px;">
+              Aprovechamiento de procesadores <strong>AWS Graviton3</strong> (60% más eficientes energéticamente) y The Climate Pledge (energía 100% renovable).
+            </p>
+          </div>
+          <div class="box">
+            <h3 style="color: var(--accent-cyan);">Ética Profesional & Impacto Social</h3>
+            <p style="font-size: 13px; margin-bottom: 8px;">
+              La ingeniería de sistemas al servicio del campesinado de Silvania: rompemos la asimetría informativa, devolvemos el precio justo al agricultor y protegemos sus cosechas con tecnología de vanguardia.
+            </p>
+            <p style="font-size: 13px;">
+              Democratización del conocimiento y soberanía tecnológica para el agro colombiano.
+            </p>
+          </div>
+        </div>
+
+        <div class="box" style="margin-top: 16px; background: #0f172a;">
+          <h3 style="color: var(--text-muted); font-size: 14px;">Sustentación Académica (Referencias APA 7):</h3>
+          <p style="font-size: 11px; color: #94a3b8;">
+            Ramírez & Cruz (2022). <em>Arquitecturas en la Nube y Transformación Digital</em> | Díaz Coutiño (2021). <em>Computación en la Nube</em> | Armbrust et al. (2010). <em>A view of cloud computing</em> | AWS Well-Architected Framework (2024) | Ley 1581 de 2012 (Congreso de Colombia).
+          </p>
+        </div>
+      </div>
+      <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #1e293b; padding-top: 14px;">
+        <span style="font-size: 14px; color: var(--accent-green); font-weight: 700;">¡Muchas gracias por su atención!</span>
+        <span style="font-size: 12px; color: #64748b;">Cristian Camilo Tabares Villanueva — CUN 2026</span>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <button id="btnPrev" class="nav-btn" onclick="prevSlide()">◀ Anterior</button>
+    <div id="slideCounter" class="slide-indicator">Diapositiva 1 de 6</div>
+    <button id="btnNext" class="nav-btn" onclick="nextSlide()">Siguiente ▶</button>
+  </footer>
+
+  <script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const slideCounter = document.getElementById('slideCounter');
+    const btnPrev = document.getElementById('btnPrev');
+    const btnNext = document.getElementById('btnNext');
+
+    function showSlide(index) {
+      slides.forEach((s, i) => s.classList.toggle('active', i === index));
+      currentSlide = index;
+      slideCounter.textContent = `Diapositiva ${index + 1} de ${slides.length}`;
+      btnPrev.disabled = index === 0;
+      btnNext.disabled = index === slides.length - 1;
+    }
+
+    function nextSlide() {
+      if (currentSlide < slides.length - 1) showSlide(currentSlide + 1);
+    }
+
+    function prevSlide() {
+      if (currentSlide > 0) showSlide(currentSlide - 1);
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+      if (e.key === 'ArrowLeft') prevSlide();
+    });
+
+    // Temporizador de 10 minutos
+    let timeLeft = 600; // 10 min
+    let timerInterval = null;
+    let isRunning = false;
+    const timerDisplay = document.getElementById('timerDisplay');
+    const btnStartPause = document.getElementById('btnStartPause');
+
+    function updateTimerDisplay() {
+      const min = Math.floor(timeLeft / 60).toString().padStart(2, '0');
+      const sec = (timeLeft % 60).toString().padStart(2, '0');
+      timerDisplay.textContent = `${min}:${sec}`;
+      if (timeLeft < 120) {
+        timerDisplay.style.color = '#ef4444'; // Alerta últimos 2 min
+      } else {
+        timerDisplay.style.color = 'var(--accent-cyan)';
+      }
+    }
+
+    function toggleTimer() {
+      if (isRunning) {
+        clearInterval(timerInterval);
+        btnStartPause.textContent = 'Reanudar';
+        isRunning = false;
+      } else {
+        timerInterval = setInterval(() => {
+          if (timeLeft > 0) {
+            timeLeft--;
+            updateTimerDisplay();
+          } else {
+            clearInterval(timerInterval);
+            isRunning = false;
+            btnStartPause.textContent = 'Terminado';
+          }
+        }, 1000);
+        btnStartPause.textContent = 'Pausar';
+        isRunning = true;
+      }
+    }
+
+    function resetTimer() {
+      clearInterval(timerInterval);
+      isRunning = false;
+      timeLeft = 600;
+      btnStartPause.textContent = 'Iniciar';
+      updateTimerDisplay();
+    }
+
+    showSlide(0);
+  </script>
+</body>
+</html>
