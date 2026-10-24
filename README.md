@@ -29,7 +29,8 @@ Diseño, evaluación técnico-financiera (FinOps) y sustentación de una arquite
 
 | Archivo | Formato | Descripción del Contenido |
 | :--- | :---: | :--- |
-| **[`ACA_Computacion_Nube_Cristian_Tabares.docx`](./ACA_Computacion_Nube_Cristian_Tabares.docx)** | Word APA 7 | Documento formal completo bajo normas APA 7 (interlineado 1.5, sangría en primera línea, portada institucional, justificación técnica, arquitectura AWS, evaluación FinOps, seguridad, soberanía de datos Ley 1581 y referencias). |
+| **[`ACA_Computacion_Nube_Cristian_Tabares.pdf`](./ACA_Computacion_Nube_Cristian_Tabares.pdf)** | PDF Oficial | Versión final del documento formal para lectura y entrega académica directa en plataforma CUN. |
+| **[`ACA_Computacion_Nube_Cristian_Tabares.docx`](./ACA_Computacion_Nube_Cristian_Tabares.docx)** | Word APA 7 | Documento formal editable bajo normas APA 7 (interlineado 1.5, sangría en primera línea, portada institucional, justificación técnica, arquitectura AWS, evaluación FinOps, seguridad, soberanía de datos Ley 1581 y referencias). |
 | **[`Modelo_FinOps_TCO_ROI_VAN.xlsx`](./Modelo_FinOps_TCO_ROI_VAN.xlsx)** | Excel | Modelo financiero completo con fórmulas nativas: comparativa On-Premise ($90.700 USD) vs AWS ($28.680 USD), ahorro del 68.3%, ROI del 196.4% y cálculo de VAN ($41.350 USD) a tasa WACC del 12%. |
 | **[`Diagramas_Arquitectura.md`](./Diagramas_Arquitectura.md)** | Markdown / Mermaid | Diagrama lógico de red VPC Multi-AZ (`us-east-1`), flujo de datos IoT de la finca a la mesa, y Modelo de Responsabilidad Compartida en código Mermaid listo para renderizar. |
 | **[`index.html`](./index.html)** | HTML5 Interactivo | Diapositivas interactivas listas para proyectar o desplegar en GitHub Pages, con temporizador regresivo de 10 minutos integrado y atajos de teclado `[← / →]`. |

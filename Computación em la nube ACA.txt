@@ -1,0 +1,61 @@
+ACA · Pitch
+DIS40/55550/26P05/B1/VP15G/VG002
+Tema 7
+ACA · Pitch
+Requisitos de finalización
+Por hacer: Hacer un envío
+Apertura: lunes, 2 de noviembre de 2026, 00:00
+Cierre: domingo, 8 de noviembre de 2026, 23:59
+Evaluación Sumativa
+🚀 Actividad Final: Desafío de Arquitectura Estratégica
+Transformación Digital en Colombia
+
+🎯
+1. Objetivo de la Actividad
+Diseñar, evaluar y sustentar una solución de infraestructura en la nube para una organización colombiana, integrando decisiones técnicas, económicas (TCO/ROI) y de cumplimiento normativo (Soberanía de Datos).
+
+👥
+2. Conformación de Grupos (3 Integrantes)
+Se recomienda asignar formalmente un rol a cada miembro del equipo:
+
+🛠️
+Arquitecto de Soluciones
+Foco Técnico
+📊
+Analista de FinOps
+Foco Económico
+🛡️
+Oficial de Seguridad
+Riesgo y Gobernanza
+🏢
+3. El Escenario (Seleccionar 1 opción por grupo)
+Caso A: Fintech
+Neobanco "AhorraYa" que necesita lanzar micropréstamos digitales con alta escalabilidad.
+
+Caso B: Sector Público
+Alcaldía Metropolitana que busca digitalizar trámites catastrales cumpliendo estrictamente soberanía de datos nacional.
+
+Caso C: Agro-Industria IoT
+Empresa cafetera que desea monitorear cultivos mediante sensores y procesar datos en tiempo real.
+
+🎬
+4. Estructura del Video Sustentación
+⏱️ Máx. 10 Minutos
+Sección / Hilo Conductor	Tiempo	Puntos Clave a Exponer
+1. Introducción y Contexto	1.5 min	Problema de negocio y por qué la infraestructura On-Premise ya no es viable.
+2. Diseño de Arquitectura	3.0 min	Modelo de despliegue, modelo de servicio (IaaS/PaaS/Serverless) y Diagrama Lógico (VPC, EC2, DB, Seguridad).
+3. Evaluación FinOps	2.5 min	Cálculo de TCO (Nube vs Datacenter) y estimación de ROI o VAN de la migración.
+4. Seguridad y Continuidad	2.0 min	Modelo de Responsabilidad Compartida, Estrategia de Alta Disponibilidad (HA) y SLA.
+5. Cierre e Impacto	1.0 min	Sostenibilidad (huella de carbono) y ética profesional en el manejo de datos en Colombia.
+⚙️
+5. Requisitos Técnicos y de Entrega
+Medio de entrega: Enlace de video en YouTube (Público u Oculto) o compartido mediante OneDrive / Google Drive.
+Herramientas recomendadas: Grabación de pantalla (Loom, Zoom) mostrando diagramas construidos en Lucidchart, Draw.io o Consola AWS.
+Sustentación académica: Incluir citas bibliográficas durante la exposición (ej. Ramírez & Cruz, Díaz Coutiño).
+📊
+6. Criterios de Evaluación (Rúbrica)
+🔗 Integración de Servicios
+🧠 Pensamiento Crítico
+📈 Análisis Financiero
+⚖️ Cumplimiento Normativo
+¡Muchos éxitos en su actividad final, ingenieros de la CUN! 🇨🇴✨
